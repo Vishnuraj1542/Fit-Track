@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+        {% for data in datas %} 
+        <p>{{ data.id }}</p>
+        <p>{{ data.product_name }}</p>
+        <p>{{ data.description }}</p>
+        <p>{{ data.price }}</p>
+        <p>{{ data.brand }}</p>
+        <img src="{{ data.product_image }}" alt="image" height="200px" width="200px">
+        <p>{{ data.seller_name }}</p>
+        <button>edit</button>
+        <button>delete</button>
+        {% endfor%}
+
+</body>
+</html>

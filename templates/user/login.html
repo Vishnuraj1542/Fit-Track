@@ -1,0 +1,29 @@
+{% load_static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login_container">
+        <div class="box">
+            <div class="left">
+                <img src={% static 'images/men_women.jpg'%} alt="gymnastics">
+            </div>
+            <div class="right">
+                <h1>Login</h1>
+                <p>welcome to Fit Track </p>
+                <form action="" method="post">
+                    {% csrf_token%}
+                    <label>Username</label><input type="text" name="Username" placeholder="username/email"><br>
+                    <label>Password</label><input type="password" name="password" placeholder="password"><br>
+                    <button id="btn" type="submit">LOGIN</button>
+                    <p>Not a user <a href="#">Sign up</a></p>
+                </form>
+            </div>
+        </div>
+    </div>                 
+</body>
+</html>

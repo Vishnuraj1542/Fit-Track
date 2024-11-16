@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" placeholder="username" name="username"><br>
+    <input type ="email" placeholder="email" name="email"><br>
+    <input type="password" placeholder="password" name="password">
+    <input type="password" placeholder="Re enter password"><br>
+    <input type="text" placeholder="owner_name" name="owner_name"><br>
+    <input type="text" placeholder="phone" name="phone"><br>
+    <input type="text" placeholder="address" name="address"><br>
+    <input type="text" placeholder="licence_no" name="licence_no"><br>
+    <input type="text" placeholder="gst_no" name="gst_no"><br>
+    <input type="submit" value="Register">
+  </form>
+</body>
+</html>

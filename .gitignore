@@ -1,0 +1,7 @@
+db.sqlite3
+gym_env/
+static/
+.vscode/
+__pycache__/
+trainer_images/.jpeg
+product_images/.jpeg
