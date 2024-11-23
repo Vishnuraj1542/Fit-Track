@@ -3,5 +3,5 @@ gym_env/
 static/
 .vscode/
 __pycache__/
-trainer_images/.jpeg
-product_images/.jpeg
+trainer_images/
+product_images/

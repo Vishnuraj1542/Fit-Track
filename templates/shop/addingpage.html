@@ -1,20 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/addingpage.css" %}">
 </head>
 <body>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="product_image"><br>
-        <input type="text" placeholder="price" name="price">
-        <input type="text" placeholder="productname" name="product_name">
-        <input type="text" placeholder="description" name="description">
-        <input type="text" placeholder="brand" name="brand">
-        <input type="text" placeholder="seller_name" name="seller_name">
-        <input type="submit" value="submit">
-    </form>
+    <div class="container">
+        <div class="elements">
+            <div class="name">
+                <h2>Add products</h2>
+            </div>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td><label>Product Name: </label><input type="text" placeholder="productname" name="product_name"></td>
+                        <td><label>Price: </label><input type="text" placeholder="price" name="price"></td>
+                    </tr>
+                        <td><label>Description: </label><input type="text" placeholder="description" name="description"></td>
+                        <td><label>Brand: </label><input type="text" placeholder="brand" name="brand"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Seller Name:</label><input type="text" placeholder="seller_name" name="seller_name"></td>
+                        <td ><label class="image">Image: </label><input type="file" name="product_image"><br></td>
+                    </tr>
+                </table>
+                <input type="submit" value="submit">
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>

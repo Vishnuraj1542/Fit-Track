@@ -1,23 +1,29 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static "css/viewpage.css" %}">
+    <title>viewpage</title>
 </head>
 <body>
-    
-        {% for data in datas %} 
-        <p>{{ data.id }}</p>
-        <p>{{ data.product_name }}</p>
-        <p>{{ data.description }}</p>
-        <p>{{ data.price }}</p>
-        <p>{{ data.brand }}</p>
-        <img src="{{ data.product_image }}" alt="image" height="200px" width="200px">
-        <p>{{ data.seller_name }}</p>
-        <button>edit</button>
-        <button>delete</button>
-        {% endfor%}
-
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="view">
+            {% for data in datas %} 
+            <div class="box">
+                <img src="{{ data.product_image.url }}" alt="image" height="200px" width="200px">
+                <h2>{{ data.product_name }}</h2>
+                <p>{{ data.description }}</p>
+                <p>{{ data.brand }}</p>
+                <p>{{ data.seller_name }}</p>
+                <h3>PRICE: {{ data.price }}</h3>
+                <a href="{% url 'deleteproduct' data.id %}">Delete</a>
+                <a href="{% url 'editproduct' data.id %}"> Edit </a>
+            </div> 
+            {% endfor %}
+        </div>
+    </form>
 </body>
 </html>

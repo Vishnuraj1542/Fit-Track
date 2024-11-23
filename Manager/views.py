@@ -7,11 +7,11 @@ from django.views import View
 
 class HomePage(View):
     def get(self,request):
-        return render(request,'manager/home.html')
+        return render(request,'user/home.html')
     
 class ShopPage(View):
     def get(self,request):
-        return render(request,'manager/homepage.html')
+        return render(request,'shop/homepage.html')
 
 class Trainer_Page(View):
     def get(self,request):
