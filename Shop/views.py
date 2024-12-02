@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.views import View
 from .models import *
 from .forms import *
+from Public .models  import*
+
 
 # Create your views here.
 class shop(View):
@@ -72,3 +74,8 @@ class Edit(View):
             form.save()
             return redirect('productview')
         return render(request,'shop/edit_page.html',{'form':form})
+
+class UserView(View):
+    def get(self,request):
+        user_data=user_details.objects.all()
+        return render(request,'shop/user_details.html',{'user_data':user_data})

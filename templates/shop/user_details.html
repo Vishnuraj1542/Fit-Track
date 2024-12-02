@@ -1,0 +1,31 @@
+{% extends 'shop/homepage.html' %}
+{% load static %}
+{% block body %}
+    <div class="all">
+        <div class="titles">
+            <h2>User Details</h2>
+        </div>
+        <div class="container1">
+{% for data in user_data %}
+            <div class="box1">
+                <div class="det">
+                    <label>Full Name: </label>{{data.name}}<br>
+                </div>
+                <div class="det">
+                    <label>Dob: </label>{{data.dob}}
+                </div>
+                <div class="det">
+                    <label>Gender: </label>{{data.gender}}
+                </div>
+                <div class="det">
+                    <label>Phone number: </label>{{data.phone}}
+                </div>
+                <div class="det">
+                    <label>address: </label><span>{{ data.address }}</span>
+                </div>
+            </div>
+{% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

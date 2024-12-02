@@ -8,4 +8,5 @@ urlpatterns=[
     path('viewproduct/',ViewPage.as_view(),name='productview'),
     path('deleteproduct/<int:id>/',Delete.as_view(),name='deleteproduct'),
     path('editproduct/<int:id>/',Edit.as_view(),name='editproduct'),
+    path('viewusers/',UserView.as_view(),name='viewusers'),
 ]

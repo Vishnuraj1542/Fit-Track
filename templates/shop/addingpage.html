@@ -1,14 +1,7 @@
+{% extends 'shop/homepage.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static "css/addingpage.css" %}">
-</head>
-<body>
-    <div class="container">
+{% block body %}
+    <div class="containers">
         <div class="elements">
             <div class="name">
                 <h2>Add products</h2>
@@ -20,6 +13,7 @@
                         <td><label>Product Name: </label><input type="text" placeholder="productname" name="product_name"></td>
                         <td><label>Price: </label><input type="text" placeholder="price" name="price"></td>
                     </tr>
+                    <tr>
                         <td><label>Description: </label><input type="text" placeholder="description" name="description"></td>
                         <td><label>Brand: </label><input type="text" placeholder="brand" name="brand"></td>
                     </tr>
@@ -32,6 +26,4 @@
             </form>
         </div>
     </div>
-
-</body>
-</html>
+{% endblock %}

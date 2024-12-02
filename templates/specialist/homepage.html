@@ -1,11 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/specialist_home.css' %}">
 </head>
+
 <body>
-    <h1>hii doctor hope you were good</h1>
+   <div class="container">
+    <nav>
+        <div class="links">
+            <h2>HII DOCTOR</h2>
+            <hr>
+            <a href="{% url 'viewuser' %}">view User</a>
+            <a href="">chat</a>
+            <a href="">view post</a>
+            <a href="">view rating</a>
+            <a href="">feedback</a>
+        </div>
+    </nav>
+    <section>
+        {% block body %}
+        {% endblock %}
+    </section>
+   </div>
 </body>
 </html>

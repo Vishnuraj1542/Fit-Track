@@ -32,7 +32,7 @@ class login_page(View):
             "USER":"Manager:homepage",
             "SHOPKEEPER":"Manager:shoppage",
             "TRAINER":"Manager:trainerpage",
-            "SPECIALIST":"Manager:Specialist_Page",
+            "NUTRI_SPECIALIST":"Manager:specialistpage",
         }
         username=request.POST.get('username')
         password=request.POST.get('password')

@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{% static "css/shophome.css" %}">
+    <link rel="stylesheet" href="{% static 'css/shophome.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <div class="container">
@@ -21,9 +23,10 @@
                     </ul>
                 </ul>
                 <hr>
-                <a href="#">Bookings</a>
+                <a href="{% url 'viewusers' %}">View Users</a>
                 <hr>
-                <a href="#">Users</a>
+
+                <a href="#">Bookings</a>
                 <hr>
                 <a href="#">Rating</a>
                 <hr>
@@ -34,7 +37,11 @@
         <section>
             <h1>Shop managing pannel</h1>
             <hr>
+            {% block body %}
+
+            {% endblock %}
         </section>
     </div>
+
 </body>
 </html>

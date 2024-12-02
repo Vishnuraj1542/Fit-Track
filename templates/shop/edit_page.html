@@ -1,45 +1,30 @@
+{% extends 'shop/homepage.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Product</title>
-    <link rel="stylesheet" href="{% static "css/editpage.css" %}">
-</head>
-<body>
-    <div class="view">
-        
+{% block body %}
+    <div class="show">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-             
-            <div class="box">
+            <div class="contain">
                 <h3>Edit Product</h3>
-                <img src="{{data.product_image.url }}"><input type="file" name="product_image"><br>
-                <table >
-                    <tr>
-                        <td><label>Product Name : </label></td>
-                        <td><input type="text" value="{{data.product_name}}" name="product_name"></td>
-                    </tr>
-                    <tr>
-                        <td> <label>Description : </label></td>
-                        <td><input type="text" value="{{data.description}}" name="description"></td>
-                    </tr>
-                    <tr>
-                        <td><label>Price : </label></td>
-                        <td><input type="number" value="{{data.price}}" name="price"></td>
-                    </tr>
-                   <tr>
-                    <td><label>Brand : </label></td>
-                    <td><input type="text" value="{{data.brand}}" name="brand"></td>
-                   </tr>
-                    <tr>
-                        <td></td>
-                        <td><input type="submit" value="Save"></td>
-                    </tr>
-                </table>   
+                <div class="pic">
+                    <img src="{{data.product_image.url }}" alt="product image">
+                </div>
+                <input type="file" name="product_image">
+                <div class="set">
+                    <label>Product Name : </label><input type="text" value="{{data.product_name}}" name="product_name">
+                </div>
+                <div class="set">
+                    <label>Description : </label><input type="text" value="{{data.description}}" name="description">
+                </div>
+                <div class="set">
+                    <label>Price : </label><input type="number" value="{{data.price}}" name="price">
+                </div>
+                <div class="set">
+                    <label>Brand : </label><input type="text" value="{{data.brand}}" name="brand">
+                </div>
+                <input type="submit" value="Save" class="btns">
             </div>
         </form>
+
     </div>
-</body>
-</html>
+{% endblock %}
