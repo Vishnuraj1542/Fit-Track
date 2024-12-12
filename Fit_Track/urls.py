@@ -24,6 +24,7 @@ urlpatterns = [
     path('public/',include('Public.urls')),
     path('', include('Manager.urls', namespace='Manager')),
     path('shop/',include('Shop.urls')),
+    path('trainer/',include('Trainer.urls')),
     path('specialist/',include('Specialist.urls')),
     path('myadmin/',include('admin_app.urls')),
 ]

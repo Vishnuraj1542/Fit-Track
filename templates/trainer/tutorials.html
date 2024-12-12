@@ -1,0 +1,10 @@
+{% block body %}
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        <label>video/image</label><input type="file" name="media"><br>
+            <label>description</label><input type="text" name="description"><br>
+        <input type="submit" value="upload">
+        </form>
+    </div>
+{% endblock %}

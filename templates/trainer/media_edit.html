@@ -1,0 +1,20 @@
+{% extends 'trainer/homepage.html' %}
+{% load static %}
+{% block body %}
+<div class="edit_container">
+    <div class="edit_box">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+             {% if item.media.url|lower|slice:"-4:" == ".mp4" %}
+                <video src="{{ item.media.url }}" controls width="200px" height="300px"></video>
+            {% elif item.media.url|lower|slice:"-4:" == ".jpg" or item.media.url|lower|slice:"-4:" == ".png" %}
+                <img src="{{ item.media.url }}" height="300px" width="300px">
+            {% endif %}
+            <input type="file" name="media">
+            <input type="text" value="{{ item.description }}" name="description">
+            <input type="submit" value="save">
+        </form>
+
+    </div>
+</div>
+{% endblock %}

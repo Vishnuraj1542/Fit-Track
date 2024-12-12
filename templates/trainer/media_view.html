@@ -1,0 +1,24 @@
+{% extends 'trainer/homepage.html' %}
+{% load static %}
+
+{% block body %}
+<div class="video-container">
+    <h1>Workout Videos</h1>
+    <div class="media-grid">
+        {% for medias in content %}
+        <div class="media-item">
+            {% if medias.media.url|lower|slice:"-4:" == ".mp4" %}
+                <video src="{{ medias.media.url }}" controls class="media-player"></video>
+            {% elif medias.media.url|lower|slice:"-4:" == ".jpg" or medias.media.url|lower|slice:"-4:" == ".png" %}
+                <img src="{{ medias.media.url }}" alt="Workout Image" class="media-img">
+            {% endif %}
+            <p class="description">{{ medias.description }}</p>
+            <div class="button-group">
+                <a href="{% url 'deletepost' medias.id %}" class="btn delete-btn">Delete</a>
+                <a href="{% url 'editpost' medias.id %}" class="btn edit-btn">Edit</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

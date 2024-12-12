@@ -39,6 +39,7 @@ class login_page(View):
         authenticated = authenticate(username=username,password=password)
         try:
             user = LoginDetails.objects.get(username=username)
+            request.session['login_id'] = user.id
 
         except LoginDetails.DoesNotExist:
             response_dict[
@@ -48,7 +49,7 @@ class login_page(View):
         if not authenticated:
             response_dict["reason"] = "Invalid credentials."
             messages.error(request, response_dict["reason"])
-            return redirect(request.GET.get("from") or "user:login")
+            return redirect(request.GET.get("from") or "Manager:login")
 
         else:
 
