@@ -8,7 +8,10 @@ from django.views import View
 class HomePage(View):
     def get(self,request):
         return render(request,'user/home.html')
-    
+class AdminPage(View):
+    def get(self,request):
+        return render(request,'admin/home.html')
+
 class ShopPage(View):
     def get(self,request):
         return render(request,'shop/homepage.html')
@@ -16,7 +19,7 @@ class ShopPage(View):
 class Trainer_Page(View):
     def get(self,request):
         return render(request,'trainer/homepage.html')
-    
+
 class Specialist_Page(View):
     def get(self,request):
         return render(request,'specialist/homepage.html')
@@ -29,6 +32,7 @@ class login_page(View):
         user_type=""
         response_dict={'sucess':False}
         landing_page_url={
+            "ADMIN":"Manager:adminpage",
             "USER":"Manager:homepage",
             "SHOPKEEPER":"Manager:shoppage",
             "TRAINER":"Manager:trainerpage",
@@ -40,6 +44,11 @@ class login_page(View):
         try:
             user = LoginDetails.objects.get(username=username)
             request.session['login_id'] = user.id
+            if user.status in ["pending", "rejected"] and user.user_type in ["USER", "SHOPKEEPER"]:
+                response_dict[
+                    "reason"] = f"your {user.user_type.lower()} account status is {user.status}."
+                messages.error(request, response_dict["reason"])
+                return render(request, 'manager/login.html', {"error_message": response_dict["reason"]})
 
         except LoginDetails.DoesNotExist:
             response_dict[
@@ -49,7 +58,7 @@ class login_page(View):
         if not authenticated:
             response_dict["reason"] = "Invalid credentials."
             messages.error(request, response_dict["reason"])
-            return redirect(request.GET.get("from") or "Manager:login")
+            return render(request, 'manager/login.html', {"error_message": response_dict["reason"]})
 
         else:
 

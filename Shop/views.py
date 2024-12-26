@@ -14,7 +14,7 @@ class shop(View):
     #shop owner regisration
 class ShopRegistration(View):
     def get (self,request):
-        return render(request, 'shop/registration.html')
+        return render(request, 'shop/trainer_register.html')
     
     def post(self,request):
         details=ShopForm(request.POST)
@@ -24,12 +24,13 @@ class ShopRegistration(View):
                 username=request.POST['username'],
                 email=request.POST['email'],
                 password=request.POST['password'],
-                user_type='SHOPKEEPER')
+                user_type='SHOPKEEPER',
+            )
             details.key=data
             details.save()
             return redirect('homepage')
         else:
-            return render(request, 'shop/registration.html')
+            return render(request, 'shop/trainer_register.html')
 
   # adding products
 

@@ -1,0 +1,55 @@
+<!-- templates/chat/chat.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Chat</h1>
+    <select id="user_list">
+        <option value="">Select a user to chat</option>
+        {% for user in users %}
+        <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+    </select>
+
+    <div id="chat_box" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll;"></div>
+
+    <textarea id="message_input" placeholder="Type your message..."></textarea>
+    <button id="send_message">Send</button>
+
+    <script>
+        let currentRecipient = null;
+
+        $('#user_list').change(function() {
+            currentRecipient = $(this).val();
+            if (currentRecipient) {
+                $.get('/chat/get_messages/', { recipient_id: currentRecipient }, function(data) {
+                    $('#chat_box').html('');
+                    data.messages.forEach(msg => {
+                        $('#chat_box').append(`<p><strong>${msg.sender}:</strong> ${msg.content}</p>`);
+                    });
+                });
+            }
+        });
+
+        $('#send_message').click(function() {
+            const content = $('#message_input').val();
+            if (currentRecipient && content) {
+                $.post('/chat/send_message/', {
+                    recipient_id: currentRecipient,
+                    content: content,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                }, function(response) {
+                    if (response.status === 'success') {
+                        $('#message_input').val('');
+                        $('#user_list').trigger('change');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

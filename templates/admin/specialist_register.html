@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spec-registration</title>
+    <link rel="stylesheet" href="{% static 'css/spec_registration.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h2>Specialist Registration</h2>
+            <form action="" method="post" enctype="multipart/form-data" >
+               {% csrf_token %}
+                <div class="row">
+                    <label for="username">User Name:</label>
+                    <input type="text" id="username" name="username" placeholder="username">
+                </div>
+                <div class="row">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="email">
+                </div>
+                <div class="row">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="password">
+                </div>
+                <div class="row">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Full name">
+                </div>
+                <div class="row">
+                    <label>Date of Birth:</label>
+                    <input type="date" name="dob" placeholder="dob">
+                </div>
+                <div class="row">
+                    <label>Gender:</label>
+                    <select name="gender">
+                        <option value="MALE">male</option>
+                        <option value="FEMALE">female</option>
+                        <option value="OTHERS">other</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label for="number">Contact No:</label>
+                    <input type="number" id="number" name="phone" placeholder="phone no">
+                </div>
+                <div class="row">
+                    <label for="qualification">Qualification:</label>
+                    <input type="text" id="qualification" name="qualification" placeholder="highest qualification">
+                </div>
+                <div class="row">
+                    <label for="exp">Experience:</label>
+                    <input type="number" id="exp" name="experience" placeholder="years">
+                </div>
+                <div class="row">
+                    <label for="specialization">Specialization:</label>
+                    <input type="text" id="specialization" name="specialization" placeholder="specialization in">
+                </div>
+                <div class="row">
+                    <label for="image">Image:</label>
+                    <input type="file" id="image" name="photo">
+                </div>
+                <div class="row">
+                    <label for="degree">Degree Certificate:</label>
+                    <input type="file" id="degree" name="certificate">
+                </div>
+                <div class="row">
+                    <label for="certificate">Experience Certificate:</label>
+                    <input type="file" id="certificate" name="exp_certificate">
+                </div>
+                <div class="row">
+                    <label for="idproof">ID Proof:</label>
+                    <input type="file" id="idproof" name="idproof">
+                </div>
+                <div class="row">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

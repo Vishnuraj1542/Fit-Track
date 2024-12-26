@@ -1,0 +1,53 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+<body>
+    <div class="verify_box">
+        <h1>Verification Dashboard</h1>
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>User Type</th>
+                    <th>Status</th>
+                    <th>Change Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in user_status %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.get_user_type_display }}</td>
+                    <td>{{ user.get_status_display }}</td>
+                    <td>
+                        <form action="{% url 'changestatus' user.id %}" method="post">
+                            {% csrf_token %}
+                            <select name="status">
+                                <option value="pending" {% if user.status == "pending" %}selected{% endif %}>Pending</option>
+                                <option value="verified" {% if user.status == "verified" %}selected{% endif %}>Verified</option>
+                                <option value="rejected" {% if user.status == "rejected" %}selected{% endif %}>Rejected</option>
+                            </select>
+                            <button type="submit" class="btn btn-update">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No pending users or trainers.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+{% endblock %}

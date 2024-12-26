@@ -10,18 +10,20 @@ class LoginDetails(AbstractUser):
         ('SHOPKEEPER', 'shopkeeper'),
         ('NUTRI_SPECIALIST', 'nutri_specialist'),
     ]
-    
     user_type = models.CharField(max_length=22, choices=USER_TYPE_CHOICES, blank=True, null=True)
-    status = models.CharField(default='active', max_length=100)  
+    status = models.CharField(default='pending', max_length=10, choices=[
+        ('pending', 'Pending'),
+        ('verified', 'Verified'),
+        ('rejected', 'Rejected'),
+    ])
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
     groups = models.ManyToManyField('auth.Group', related_name='userprofile_groups', blank=True)
     user_permissions = models.ManyToManyField('auth.Permission', related_name='userprofile_permissions', blank=True)
 
     def __str__(self):
-        return self.username  # Display username for clarity
+        return self.username  
 
 
 class Token(models.Model):

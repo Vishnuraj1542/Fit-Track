@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Trainer</title>
     <link rel="stylesheet" href="{% static 'css/trainer_homepage.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </head>
 <body>
     <div class="container">
@@ -16,7 +18,7 @@
                 <a href="{% url 'viewstudents' %}">Users</a>
                 <a href="{% url 'viewpost' %}">Posts</a>
                 <a href="#">Booking</a>
-                <a href="#">Suggestion</a>
+                <a href="{% url 'submit_suggestion' %}">Suggestion</a>
                 <a href="#">Ratings</a>
                 <a href="#">Feedback</a>
 

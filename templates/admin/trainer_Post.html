@@ -1,0 +1,31 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+<div class="media_pack">
+    <div class="write">
+            <h2>WORKOUT POST</h2>
+    </div>
+    {% for post in media %}
+    <div class="post">
+        {% if post.lock and post.lock.photo %}
+            <div class="trainer_photo">
+                <img src="{{ post.lock.photo.url }}" alt="Trainer Photo">
+                <p>{{ post.connect }}</p>
+            </div>
+        {% else %}
+            <p>No trainer photo available</p>
+        {% endif %}
+        {% if post.media|lower|slice:"-4:" == ".png" or post.media|lower|slice:"-4:" == ".jpg" %}
+            <div class="pic">
+                <img src="{{ post.media.url }}" alt="Media">
+            </div>
+        {% elif post.media|lower|slice:"-4:" == ".mp4" %}
+            <div class="screen">
+                <video src="{{ post.media.url }}" controls></video>
+            </div>
+        {% endif %}
+        <p>{{ post.description }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

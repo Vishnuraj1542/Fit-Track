@@ -1,0 +1,15 @@
+
+{% block body %}
+
+<div class="base">
+    {% for detail in details %}
+    <p>{{ detail.username }}</p>
+    <p>{{detail.id }}</p>
+    <p>{{detail.user_type }}</p>
+    <p>{{detail.phone }}</p>
+    {% endfor %}
+        <a href="{% url 'addpost' %}">
+            <i class="fa-solid fa-plus"></i>
+        </a>
+    </div>
+{% endblock %}

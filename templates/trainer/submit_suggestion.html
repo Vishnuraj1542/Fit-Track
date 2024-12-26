@@ -1,0 +1,49 @@
+{% extends 'trainer/homepage.html' %}
+{% block body %}
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Suggestion</title>
+    <style>
+        .suggestion-box {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .suggestion-text {
+            font-weight: bold;
+        }
+        .reply-text {
+            color: green;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Submit Your Suggestion</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send</button>
+</form>
+
+<h3>Your Suggestions</h3>
+<ul>
+    {% for suggestion in suggestions %}
+        <li>
+            <strong>Suggestion:</strong> {{ suggestion.suggestion }} <br>
+            <strong>Reply:</strong> {{ suggestion.reply|default:"No reply yet" }}
+            <hr>
+        </li>
+    {% empty %}
+        <p>No suggestions yet.</p>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
+
+{% endblock %}

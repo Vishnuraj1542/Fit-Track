@@ -9,7 +9,7 @@
         <div class="media-item">
             {% if medias.media.url|lower|slice:"-4:" == ".mp4" %}
                 <video src="{{ medias.media.url }}" controls class="media-player"></video>
-            {% elif medias.media.url|lower|slice:"-4:" == ".jpg" or medias.media.url|lower|slice:"-4:" == ".png" %}
+            {% elif medias.media.url|lower|slice:"-4:" == ".jpg" or medias.media.url|lower|slice:"-5:" == ".jpeg" %}
                 <img src="{{ medias.media.url }}" alt="Workout Image" class="media-img">
             {% endif %}
             <p class="description">{{ medias.description }}</p>
@@ -19,6 +19,11 @@
             </div>
         </div>
         {% endfor %}
+    </div>
+    <div class="base">
+        <a href="{% url 'addpost' %}">
+            <i class="fa-solid fa-plus"></i>
+        </a>
     </div>
 </div>
 {% endblock %}

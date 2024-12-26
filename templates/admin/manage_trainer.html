@@ -1,0 +1,53 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+<body>
+    <div class="verify_box">
+        <h1>Verification Dashboard</h1>
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-error{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>User Type</th>
+                    <th>Status</th>
+                    <th>Change Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in item %}
+                <tr>
+                    <td>{{ data.username }}</td>
+                    <td>{{ data.email }}</td>
+                    <td>{{data.user_type}}</td>
+                    <td>{{ data.is_active }}</td>
+                    <td>
+                        <form action="{% url 'managetrainer' data.id %}" method="post">
+                            {% csrf_token %}
+                            <select name="is_active">
+                                <option value="true" {% if data.is_active %}selected{% endif %}>Active</option>
+                                <option value="false" {% if not data.is_active %}selected{% endif %}>Inactive</option>
+                            </select>
+                            <button type="submit" class="btn btn-update">Update</button>
+                        </form>
+
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No pending users or trainers.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+{% endblock %}

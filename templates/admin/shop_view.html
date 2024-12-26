@@ -1,0 +1,20 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="view">
+            {% for data in datas %}
+            <div class="box">
+                <img src="{{ data.product_image.url }}" alt="image" height="200px" width="200px">
+                <h2>{{ data.product_name }}</h2>
+                <p>{{ data.description }}</p>
+                <p>{{ data.brand }}</p>
+                <p>{{ data.seller_name }}</p>
+                <h3>PRICE: {{ data.price }}</h3>
+                <a href="{% url 'deleteproduct' data.id %}">Delete</a>
+                <a href="{% url 'editproduct' data.id %}"> Edit </a>
+            </div>
+            {% endfor %}
+        </div>
+    </form>
+{% endblock %}

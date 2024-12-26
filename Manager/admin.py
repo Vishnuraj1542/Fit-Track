@@ -1,35 +1,41 @@
 from django.contrib import admin
-from Manager.models import (LoginDetails,Token,)
+from Manager.models import LoginDetails, Token
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
-from .forms import CustomUserCreationForm,CustomUserChangeForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+
+
 # Register your models here.
 
 class CustomUserAdmin(UserAdmin):
+    model = LoginDetails
 
     fieldsets = (
         (None, {"fields": ("username", "password")}),
         (
             _("Personal info"),
-            {"fields": ("email", "first_name")},
+            {"fields": ("email", "first_name", "last_name")},
         ),
         (
             _("Permissions"),
             {"fields": ("user_type", "is_active", "is_superuser", "status")},
         ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
+
     add_fieldsets = (
         (
             None,
             {"classes": ("wide",), "fields": ("username", "password1", "password2")},
         ),
     )
+
     form = CustomUserChangeForm
     add_form = CustomUserCreationForm
-    list_display = ("pk","username", "first_name", "user_type")
+    list_display = ("pk", "username", "first_name", "user_type", "status", "is_active")
     search_fields = ("username", "first_name")
     ordering = ("username",)
 
 
-admin.site.register(LoginDetails,CustomUserAdmin)
+admin.site.register(LoginDetails, CustomUserAdmin)
 admin.site.register(Token)

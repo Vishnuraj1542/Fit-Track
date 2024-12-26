@@ -1,33 +1,26 @@
+{% extends 'specialist/homepage.html' %}
 {% block body %}
-
-<!-- Display Trainer Information -->
-<div class="trainer_info">
-    {% if trainer %}
-        {% if trainer.photo %}
-            <img src="{{ trainer.photo.url }}" alt="{{ trainer.name }}" width="150" height="150">
-        {% endif %}
-        <p>{{ trainer.name }}</p> <!-- Add trainer's name if desired -->
-    {% endif %}
-</div>
-
-<!-- Display Media Posts -->
-<div class="media_box">
+<div class="media_pack">
+    <div class="write">
+            <h2>WORKOUT POST</h2>
+    </div>
     {% for post in media %}
     <div class="post">
         {% if post.lock and post.lock.photo %}
             <div class="trainer_photo">
-                <img src="{{ post.lock.photo.url }}" alt="Trainer Photo" width="100" height="100">
+                <img src="{{ post.lock.photo.url }}" alt="Trainer Photo">
+                <p>{{ post.connect }}</p>
             </div>
+        {% else %}
+            <p>No trainer photo available</p>
         {% endif %}
-
-        <!-- Display the media -->
         {% if post.media|lower|slice:"-4:" == ".png" or post.media|lower|slice:"-4:" == ".jpg" %}
             <div class="pic">
-                <img src="{{ post.media.url }}" alt="Media" width="300" height="200">
+                <img src="{{ post.media.url }}" alt="Media">
             </div>
         {% elif post.media|lower|slice:"-4:" == ".mp4" %}
             <div class="screen">
-                <video src="{{ post.media.url }}" width="300" height="200" controls></video>
+                <video src="{{ post.media.url }}" controls></video>
             </div>
         {% endif %}
         <p>{{ post.description }}</p>

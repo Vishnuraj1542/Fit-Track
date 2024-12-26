@@ -1,0 +1,30 @@
+{% extends 'admin/home.html' %}
+
+{% block body %}
+<h1>Suggestions from Trainers</h1>
+
+{% for suggestion, form in suggestion_forms %}
+<div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 15px;">
+    <strong>Trainer:</strong> {{ suggestion.sender.username }}<br>
+    <strong>Suggestion:</strong>
+    <p>{{ suggestion.suggestion }}</p>
+
+    <!-- Display existing reply -->
+    {% if suggestion.reply %}
+    <div>
+        <strong>Admin Reply:</strong>
+        <p>{{ suggestion.reply }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Reply form -->
+    <h4>Reply to Suggestion</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="suggestion_id" value="{{ suggestion.pk }}"> <!-- Hidden field to identify the suggestion -->
+        <button type="submit">Submit Reply</button>
+    </form>
+</div>
+{% endfor %}
+{% endblock %}

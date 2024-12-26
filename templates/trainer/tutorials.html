@@ -1,10 +1,15 @@
+{% extends 'trainer/homepage.html' %}
 {% block body %}
-    <div class="container">
+    <div class="container2">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-        <label>video/image</label><input type="file" name="media"><br>
-            <label>description</label><input type="text" name="description"><br>
-        <input type="submit" value="upload">
+            <label for="media">Video/Image</label>
+            <input type="file" name="media" id="media" required><br>
+
+            <label for="description">Description</label>
+            <input type="text" name="description" id="description" required><br>
+
+            <input type="submit" value="Upload">
         </form>
     </div>
 {% endblock %}

@@ -13,13 +13,14 @@ class UserRegistration(View):
         details=user_form(request.POST) 
         if details.is_valid():
             details.save(commit=False)
-            data=LoginDetails.objects.create_user(
+            C=LoginDetails.objects.create_user(
                 username=request.POST['username'],
                 email=request.POST['email'],
                 password=request.POST['password'],
                 user_type='USER'
             )
-            details.key=data
+            details.USER=C
+            print(C)
             details.save()
             return HttpResponse('hii')
         else:

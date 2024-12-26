@@ -8,4 +8,5 @@ urlpatterns = [
     path('shop/', ShopPage.as_view(), name='shoppage'),
     path('trainer/',Trainer_Page.as_view(),name='trainerpage'),
     path('specialist/',Specialist_Page.as_view(),name="specialistpage"),
+    path('myadmin/',AdminPage.as_view(),name="adminpage"),
 ]

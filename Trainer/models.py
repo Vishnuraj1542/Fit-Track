@@ -11,13 +11,8 @@ class TrainerRegistration(models.Model):
     experience_certificate = models.ImageField(blank=True, null=True,upload_to='trainer_images')
     biodata = models.ImageField(blank=True, null=True,upload_to='trainer_images')
     key = models.OneToOneField(LoginDetails, on_delete=models.CASCADE, blank=True, null=True,related_name='trainer')
-    status = models.CharField(default='active', max_length=33, null=True, blank=True)
-    is_active = models.BooleanField(default=True, blank=True, null=True) 
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
-
-
-
 class Tutorials(models.Model):
     media=models.FileField(blank=True,null=True,upload_to='tutorial')
     description=models.CharField(max_length=1000,blank=True,null=True,)
@@ -27,3 +22,10 @@ class Tutorials(models.Model):
     is_active=models.BooleanField(default=True,null=True,blank=True)
     created_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_at=models.DateTimeField(auto_now_add=True,blank=True,null=True)
+
+
+class Suggestion(models.Model):
+    sender=models.ForeignKey(LoginDetails,on_delete=models.CASCADE,blank=True,null=True)
+    suggestion=models.TextField(max_length=1000,null=True,blank=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    reply = models.TextField(null=True, blank=True)
