@@ -1,0 +1,31 @@
+
+{% extends 'admin/home.html' %}
+{% block body %}
+
+<div class="entire">
+    <h1>Manage Specialists Details</h1><button class="buttons"><a href="{% url 'viewtrainers' %}">Trainers</a></button>
+    <div class="base">
+    {% for data in object %}
+    <div class="detail-item">
+        {% if data.photo %}
+        <img src="{{ data.photo.url }} " alt='trainer images' height="70px" width="70px">
+        {% else %}
+        <p>photo not available</p>
+        {% endif %}
+
+        <p>Name: {{ data.name }}</p>
+        <p>Status: {{ data.key.is_active|yesno:"Active,Inactive" }}</p>
+        <p>qualification: {{data.qualification}}</p>
+        <P>Experience: {{data.experience}}</P>
+        <a href="{% url 'editspecialist' data.id %}">edit</a>
+        <a href="{% url 'deletespecialist' data.id %}">delete</a>
+    </div>
+    <hr/>
+    {% endfor %}
+</div>
+
+<a href="{% url 'specialist_registration' %}" class="add-post">
+    <i class="fa-solid fa-plus"></i>
+</a>
+</div>
+{% endblock %}

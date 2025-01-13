@@ -1,0 +1,89 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+{% load static %}
+<div class="train_form">
+    <h1>Specialist Edit</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Full name" value="{{ datas.name }}"
+                   title="Enter the full name of the trainer.">
+        </div>
+
+        <div class="row">
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" placeholder="DOB" value="{{ datas.dob|date:'Y-m-d' }}">
+        </div>
+
+        <div class="row">
+            <label for="gender">Gender:</label>
+            <select name="gender" id="gender">
+                <option value="MALE" {% if datas.gender == "MALE" %}selected{% endif %}>Male</option>
+                <option value="FEMALE" {% if datas.gender == "FEMALE" %}selected{% endif %}>Female</option>
+                <option value="OTHERS" {% if datas.gender == "OTHERS" %}selected{% endif %}>Other</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <label for="number">Contact No:</label>
+            <input type="number" id="number" name="phone" placeholder="Phone Number"
+                   value="{{ datas.phone }}" title="Enter a valid phone number.">
+        </div>
+
+        <div class="row">
+            <label for="qualification">Qualification:</label>
+            <input type="text" id="qualification" name="qualification" placeholder="Highest qualification"
+                   value="{{ datas.qualification }}" title="Enter the highest educational qualification.">
+        </div>
+
+        <div class="row">
+            <label for="exp">Experience:</label>
+            <input type="number" id="exp" name="experience" placeholder="Years"
+                   value="{{ datas.experience }}" title="Enter the number of years of experience.">
+        </div>
+
+        <div class="row">
+            <label for="specialization">Specialization:</label>
+            <input type="text" id="specialization" name="specialization" placeholder="Specialization in"
+                   value="{{ datas.specialization }}" title="Enter the area of specialization.">
+        </div>
+
+        <div class="row">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="photo">
+            {% if datas.photo %}
+                <p>Current: <a href="{{ datas.photo.url }}" target="_blank">{{ datas.photo.name }}</a></p>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <label for="degree">Degree Certificate:</label>
+            <input type="file" id="degree" name="certificate">
+            {% if datas.certificate %}
+                <p>Current: <a href="{{ datas.certificate.url }}" target="_blank">{{ datas.certificate.name }}</a></p>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <label for="certificate">Experience Certificate:</label>
+            <input type="file" id="certificate" name="exp_certificate">
+            {% if datas.exp_certificate %}
+                <p>Current: <a href="{{ datas.exp_certificate.url }}" target="_blank">{{ datas.exp_certificate.name }}</a></p>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <label for="idproof">ID Proof:</label>
+            <input type="file" id="idproof" name="idproof">
+            {% if datas.idproof %}
+                <p>Current: <a href="{{ datas.idproof.url }}" target="_blank">{{ datas.idproof.name }}</a></p>
+            {% endif %}
+        </div>
+
+        <div class="row">
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+{% endblock %}

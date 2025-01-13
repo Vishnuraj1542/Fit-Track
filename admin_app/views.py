@@ -1,58 +1,64 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from django.views import View
-from Trainer.forms import *
-from django.http import HttpResponse
-from Specialist.forms import *
+from Trainer.models import*
+from Public.models import*
 from Specialist.models import *
 from Shop.models import *
+from Trainer.forms import *
+from Specialist.forms import *
+from django.views import View
+from django.urls import reverse
+from django.http import HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.contrib import messages
-from Trainer.models import TrainerRegistration,Tutorials
+
 
 
 # Create your views here.
 
                          # Trainer registration view
-class TrainerRegistration(View):
-    def get(self,request):
-        return render(request,'admin/trainer_register.html')
-    def post(self,request):
-        data=Trainer_Form(request.POST,request.FILES)
+class TrainersRegistration(View):
+    def get(self, request):
+        return render(request, 'admin/trainer_register.html')
+
+    def post(self, request):
+        data = Trainer_Form(request.POST, request.FILES)
         if data.is_valid():
-            data.save(commit=False)
-            details=LoginDetails.objects.create_user(
+            details = LoginDetails.objects.create_user(
                 username=request.POST['username'],
                 email=request.POST['email'],
                 password=request.POST['password'],
                 user_type='TRAINER',
                 status='verified'
             )
-            data.key=details
-            data.save()
-            return HttpResponse ('trainer added sucessfully')
-        return render(request,'admin/trainer_register.html')
+            trainer = data.save(commit=False)
+            trainer.key = details
+            trainer.save()
+            return HttpResponse('<script>alert("Trainer added successfully!"); window.location.href="/admin/home/";</script>')
+        return render(request, 'admin/trainer_register.html', {'form': data})
 
-                    #Specialist Registration
+                #Specialist Registration
 class Specialist_Registration(View):
-    def get(self,request):
-        return render(request,'admin/specialist_register.html')
-    def post(self,request):
-        details= Specialist_Form(request.POST,request.FILES)
+    def get(self, request):
+        return render(request, 'admin/specialist_register.html')
+
+    def post(self, request):
+        details = Specialist_Form(request.POST, request.FILES)
         if details.is_valid():
-            details.save(commit=False)
-            data=LoginDetails.objects.create_user(
+            data = LoginDetails.objects.create_user(
                 username=request.POST['username'],
                 email=request.POST['email'],
                 password=request.POST['password'],
-                user_type='SPECIALIST',
-                status = 'verified'
+                user_type='NUTRI_SPECIALIST',
+                status='verified'
             )
-            details.key=data
-            details.save()
-            return HttpResponse('specialist added sucessfully')
-        return render(request,'admin/specialist_register.html')
+            specialist = details.save(commit=False)
+            specialist.key = data
+            specialist.save()
+            return redirect('managespecialist')
+        return render(request, 'admin/specialist_register.html', {'form': details})
+
 
 
         # manageshop view products edit products delete products
@@ -121,53 +127,123 @@ class Verify(View):
         messages.success(request,f"{user_data.username} profile {user_data.status} sucessfully")
         return redirect('verify')
 
-      #Manage status of trainer
-
-
+                      #Manage status of trainer
 
 class ManageTrainer(View):
     def get(self, request):
-        # Fetch trainers only
         data = LoginDetails.objects.filter(user_type='TRAINER')
         return render(request, 'admin/manage_trainer.html', {'item': data})
 
     def post(self, request, id):
         try:
-            # Fetch the trainer with the given ID
             trainer = LoginDetails.objects.get(user_type='TRAINER', pk=id)
-            # Update the is_active status
             trainer.is_active = request.POST.get('is_active') == 'true'
             trainer.save()
             messages.success(request, 'Status successfully changed.')
         except LoginDetails.DoesNotExist:
-            # Handle case when trainer is not found
             messages.error(request, 'Trainer not found.')
         return redirect('managetrainer')
 
 
-
-        # Manage Trainer and Specialist
+                        # (Add edit delete) Manage Trainer and Specialist
 class TrainerView(View):
     def get(self, request):
-        trainer_details = TrainerRegistration.objects.all()
-
-        # print(trainer_details)
-        return render(request, 'admin/trainerdetails_view.html', )
+        trainer_details = TrainerRegistration.objects.select_related('key').all()
+        return render(request, 'admin/trainerdetails_view.html',{'details':trainer_details} )
 
 
-class ManageSpecialist(View):
+class EditTrainer(View):
+    def get(self, request, id):
+        data = get_object_or_404(TrainerRegistration, pk=id)
+        form = Trainer_Form(instance=data)
+        return render(request, 'admin/trainer_edit.html', {'form': form, 'trainer': data})
+
+    def post(self, request, id):
+        data = get_object_or_404(TrainerRegistration, pk=id)
+        form = Trainer_Form(request.POST, request.FILES, instance=data)
+        if form.is_valid():
+            updated_trainer = form.save(commit=False)
+            details = LoginDetails.objects.filter(pk=data.key.pk).update(
+                username=request.POST.get('username'),
+                email=request.POST.get('email')
+            )
+            updated_trainer.save()
+            return redirect('viewtrainers')
+        return render(request, 'admin/trainer_edit.html', {'form': form, 'trainer': data})
+
+
+                     #<---------specialist------------->
+
+
+class SpecialistView(View):
     def get(self,request):
-        data = Specialist_Details.objects.select_related('key')
-        return render(request,'admin/manage_specialist.html',{'object':data})
+        data = Specialist_Details.objects.select_related('key').all()
+        return render(request,'admin/specialistdetails_view.html',{'object':data})
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseNotFound
+
+class EditSpecialist(View):
+    def get(self, request, id):
+        data = get_object_or_404(Specialist_Details, pk=id)
+        form = Specialist_Form(instance=data)
+        return render(request, 'admin/specialist_edit.html', {'datas': data, 'form': form})
+
+    def post(self, request, id):
+        data = get_object_or_404(Specialist_Details, pk=id)
+        form = Specialist_Form(request.POST, request.FILES, instance=data)
+        if form.is_valid():
+            form.save()
+            return redirect('managespecialist')
+        return render(request, 'admin/specialist_edit.html', {'form': form, 'datas': data})
+
+class DeleteSpecialist(View):
+    def get(self,request,id):
+        data=get_object_or_404(Specialist_Details,pk=id)
+        return render(request,'admin/confirmation.html',{'specialist':data})
+    def post(self, request, id):
+        try:
+            data = get_object_or_404(Specialist_Details, pk=id)
+            data.delete()
+            redirect_url = reverse('managespecialist')
+            return HttpResponse(
+                f'<script>alert("Specialist deleted successfully."); window.location.href="{redirect_url}";</script>'
+            )
+        except Exception as e:
+            redirect_url = reverse('managespecialist')
+            return HttpResponse(
+                f'<script>alert("Error deleting specialist: {str(e)}"); window.location.href="{redirect_url}";</script>'
+            )
+
+               # <-----------complaints from the users -------------------->
+
+class ViewComplaintsView(View):
+    def get(self, request, *args, **kwargs):
+        complaints = Complaint.objects.filter(reply__isnull=True).order_by('-created_at')
+        for complaint in complaints:
+            print("jakjdljalj",complaint.complaint_text)
+
+        return render(request, 'admin/view_complaints.html', {'complaints': complaints})
+
+class ReplyComplaintView(View):
+    def get(self, request, pk, *args, **kwargs):
+        complaint = Complaint.objects.get(pk=pk)
+        return render(request, 'admin/reply_complaint.html', {'complaint': complaint})
+
+    def post(self, request, pk, *args, **kwargs):
+        complaint = Complaint.objects.get(pk=pk)
+        reply = request.POST.get('reply')
+        if reply:
+            complaint.reply = reply
+            complaint.save()
+            return redirect('view_complaints')
+        return render(request, 'admin/view_complaints.html', {'complaint': complaint})
 
 
-
-
-
-
-
-
-
+#    <-----------feedback from users----------->
+class UserRating(View):
+    def get(self,request):
+        review=Feedback.objects.all()
+        return render(request,'admin/view_feedback.html',{'reviews':review})
 
 
 

@@ -16,13 +16,15 @@
                 <h2> HELLO ADMIN</h2>
                 <hr>
                 <a href="{% url 'verify' %}">Verify</a>
-                <a href="#">Manage</a>
+                <a href="{% url 'viewtrainers' %}">Manage</a>
                 <a href="{% url 'manage_shop' %}">Shop</a>
                 <a href="{% url 'workout' %}">Post</a>
                 <a href="{% url 'managetrainer' %}">Status</a>
-                <a href="#">Complaint</a>
-                <a href="#">Feedback</a>
+                <a href="{% url 'view_complaints' %}">Complaint</a>
+                <a href="{% url 'ratingandfeedback' %}">Feedback</a>
                 <a href="{% url 'view_all_suggestions' %}">suggestion</a>
+                <a href="{% url 'specialistlist' %}">specialist doctors</a>
+
             </div>
         </nav>
         <section>

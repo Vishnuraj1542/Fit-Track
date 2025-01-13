@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for specialist in specialists %}
+<p>{{ specialist.name }}</p>
+<p>{{specialist.gender}}</p>
+<p>{{specialist.phone}}</p>
+    <a href="{% url 'user_chat' specialist.id %}">consult</a>
+{% endfor %}
+
+</body>
+</html>

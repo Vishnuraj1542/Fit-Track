@@ -1,0 +1,29 @@
+{% extends 'admin/home.html' %}
+{% block body %}
+    <h1>User Feedback</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for feedback in reviews %}
+    <div>
+        <tr>
+            <td>{{ feedback.user }}</td>
+            <td>{{ feedback.rating }}</td>
+            <td><p>{{ feedback.comment }}</p>
+            <td>{{feedback.created_at }}</td>
+        </tr>
+        <div>
+        </div>
+    </div>
+{% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

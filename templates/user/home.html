@@ -28,11 +28,14 @@
                 <ul class="dropdown-menu">
                   <li><a href="/diet-charts">Diet Charts</a></li>
                   <li><a href="/rewards">Rewards</a></li>
+                  <li><a href="{% url 'complaintreply' %}">viewreply</a></li>
+                  <li><a href="{% url 'submitfeedback' %}">submitfeedback</a></li>
                 </ul>
               </li>
-              <li><a href="/profile">Profile</a></li>
+              <li><a href="{% url 'submit_complaint' %}">submitcomplaint</a></li>
             </ul>
           </nav>
     </header>
 </body>
+
 </html>

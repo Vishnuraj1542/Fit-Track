@@ -1,15 +1,25 @@
-
+{% extends 'admin/home.html' %}
 {% block body %}
 
-<div class="base">
+<div class="entire">
+    <h1>Manage Trainers Details</h1> <button class="buttons"><a href="{% url 'managespecialist' %}">SPECIALIST</a></button>
+    <div class="base">
     {% for detail in details %}
-    <p>{{ detail.username }}</p>
-    <p>{{detail.id }}</p>
-    <p>{{detail.user_type }}</p>
-    <p>{{detail.phone }}</p>
-    {% endfor %}
-        <a href="{% url 'addpost' %}">
-            <i class="fa-solid fa-plus"></i>
-        </a>
+    <div class="detail-item">
+        <img src="{{ detail.photo.url }} " alt='trainer images' height="70px" width="70px">
+        <p>Username: {{ detail.key.username }}</p>
+        <p>Email: {{ detail.key.email }}</p>
+        <p>Name: {{ detail.name }}</p>
+        <p>Status: {{ detail.key.is_active|yesno:"Active,Inactive" }}</p>
+        <p></p>
+        <a href="{% url 'edittrainer' detail.id %}">edit</a>
     </div>
+    <hr/>
+    {% endfor %}
+</div>
+
+<a href="{% url 'addpost' %}" class="add-post">
+    <i class="fa-solid fa-plus"></i>
+</a>
+</div>
 {% endblock %}

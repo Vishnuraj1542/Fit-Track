@@ -22,14 +22,12 @@ class Specialist_Details(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
 
-
-# models.py
-
 class Message(models.Model):
-    sender = models.ForeignKey(LoginDetails, related_name='sent_messages', on_delete=models.CASCADE)
-    recipient = models.ForeignKey(LoginDetails, related_name='received_messages', on_delete=models.CASCADE)
-    content = models.TextField()
-    timestamp = models.DateTimeField(default=now)
+    sender = models.ForeignKey(LoginDetails,on_delete=models.CASCADE,related_name='public_sent_messages')
+    receiver = models.ForeignKey(LoginDetails,on_delete=models.CASCADE,related_name='public_received_messages')
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.sender} -> {self.recipient}: {self.content[:20]}"
+        return f"From {self.sender.username} to {self.receiver.username} at {self.timestamp}"
+

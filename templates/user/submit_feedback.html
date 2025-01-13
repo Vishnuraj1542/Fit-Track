@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Feedback</title>
+    <style>
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            font-size: 2rem;
+            gap: 5px;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            color: #ddd;
+            cursor: pointer;
+        }
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: gold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Submit Feedback</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="star-rating">
+            <input type="radio" name="rating" value="5" id="star5">
+            <label for="star5">★</label>
+            <input type="radio" name="rating" value="4" id="star4">
+            <label for="star4">★</label>
+            <input type="radio" name="rating" value="3" id="star3">
+            <label for="star3">★</label>
+            <input type="radio" name="rating" value="2" id="star2">
+            <label for="star2">★</label>
+            <input type="radio" name="rating" value="1" id="star1">
+            <label for="star1">★</label>
+        </div>
+        <textarea name="comment" rows="5" placeholder="Leave your feedback here..."></textarea>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

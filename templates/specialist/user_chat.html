@@ -1,0 +1,17 @@
+{% extends 'specialist/homepage.html' %}
+{% block body %}
+<h2>Chat with User</h2>
+<div class="chat-box">
+    {% for msg in messages %}
+        <div class="{% if msg.sender.id == request.session.login_id %}sent{% else %}received{% endif %}">
+            <strong>{{ msg.sender.username }}</strong>: {{ msg.message }} <br>
+            <small>{{ msg.timestamp }}</small>
+        </div>
+    {% endfor %}
+</div>
+<form method="post">
+    {% csrf_token %}
+    <textarea name="message" placeholder="Type your message here..." required></textarea>
+    <button type="submit">Send</button>
+</form>
+{% endblock %}

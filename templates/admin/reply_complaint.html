@@ -1,0 +1,12 @@
+{% extends 'admin/home.html' %}
+
+{% block body %}
+  <h2>Reply to Complaint</h2>
+  <form method="post">
+    {% csrf_token %}
+    <textarea name="reply" rows="4" cols="40" placeholder="Write your reply here..."></textarea><br><br>
+    <button type="submit">Send Reply</button>
+  </form>
+  <br>
+  <a href="{% url 'view_complaints' %}">Back to Complaints</a>
+{% endblock %}
