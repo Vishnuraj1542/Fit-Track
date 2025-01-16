@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for data in log %}
+<img src="{{data.product_image.url}}">
+<p>{{data.product_name}}</p>
+<p>{{data.description}}</p>
+<a href="{{data.id}}">ADDTOCART</a>
+<a href="{{data.id}}">BUYNOW</a>
+{% endfor %}
+</body>
+</html>

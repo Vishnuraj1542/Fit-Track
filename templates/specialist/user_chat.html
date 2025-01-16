@@ -1,17 +1,48 @@
 {% extends 'specialist/homepage.html' %}
 {% block body %}
-<h2>Chat with User</h2>
+<head>
+<style>
+    .chat-box {
+    display: flex;
+    flex-direction: column;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.message {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.message.sent {
+    align-self: flex-end;
+    background-color: #dcf8c6;
+}
+
+.message.received {
+    align-self: flex-start;
+    background-color: #f1f0f0;
+}
+
+form {
+    display: flex;
+    margin-top: 10px;
+}
+
+</style>
+</head>
 <div class="chat-box">
-    {% for msg in messages %}
-        <div class="{% if msg.sender.id == request.session.login_id %}sent{% else %}received{% endif %}">
-            <strong>{{ msg.sender.username }}</strong>: {{ msg.message }} <br>
-            <small>{{ msg.timestamp }}</small>
+    {% for message in messages %}
+        <div class="message {% if message.sender.id == request.session.login_id %}sent{% else %}received{% endif %}">
+            <p>{{ message.sender.username }}: {{ message.message }}</p>
         </div>
     {% endfor %}
 </div>
+
 <form method="post">
     {% csrf_token %}
-    <textarea name="message" placeholder="Type your message here..." required></textarea>
+    <input type="text" name="message" placeholder="Type a message">
     <button type="submit">Send</button>
 </form>
 {% endblock %}

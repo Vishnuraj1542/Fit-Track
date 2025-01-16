@@ -2,9 +2,11 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse
 from django.views import View
 from .models import *
+from Shop .models import *
 from Specialist.models import *
 from .form import *
 from django.urls import reverse
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -15,6 +17,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class UserPage(View):
     def get(self,request):
         return render(request,'user/home.html')
+
+
 
  #                   <-----------user registration ----------->
 class UserRegistration(View):
@@ -44,7 +48,6 @@ class SubmitComplaintView(View):
 
     def post(self, request, *args, **kwargs):
         if 'login_id' not in request.session:
-            print("kajl;sdj",login_id)
             return redirect('Manager:login')
         user_id = request.session['login_id']
         user = get_object_or_404(LoginDetails, id=user_id)
@@ -94,5 +97,45 @@ class SubmitFeedback(View):
 
 class SpecialistList(View):
     def get(self, request):
-        specialists = Specialist_Details.objects.all()
-        return render(request, 'user/specialist_list.html', {'specialists': specialists})
+        specialists = Specialist_Details.objects.select_related('key').all()
+        return render(request, 'user/specialist_list.html', {'specials': specialists})
+
+
+class ChatWithSpecialist(View):
+    def get(self, request, specialist_id):
+        user_id = request.session.get('login_id')
+        if not user_id:
+            return redirect('login')
+        specialist = get_object_or_404(LoginDetails, id=specialist_id)
+        print('ljsldjajdoaljdoajkl',specialist)
+        messages = Message.objects.filter(
+            Q(sender_id=user_id, receiver_id=specialist_id) |
+            Q(sender_id=specialist_id, receiver_id=user_id)
+        ).order_by('timestamp')
+        return render(request, 'user/specialist_chat.html', {
+            'messages': messages,
+            'specialist_id': specialist_id,
+            'user_id': user_id,
+        })
+    def post(self, request, specialist_id):
+        user_id = request.session.get('login_id')
+        if not user_id:
+            return redirect('login')
+
+        message_text = request.POST.get('message')
+        if message_text:
+            Message.objects.create(sender_id=user_id, receiver_id=specialist_id, message=message_text)
+
+        return redirect('specialistchat', specialist_id=specialist_id)
+    #               <------------shop view \product view----------->
+class ViewShop(View):
+    def get(self, request):
+        data = Products.objects.all()
+        return render(request, 'User/shop_page.html', {'datas': data})
+    
+class ProductView(View):
+    def get(self,request,id):
+        data=Products.objects.get(pk=id)
+        return render(request,'user/product_view.html',{'log':data})
+
+

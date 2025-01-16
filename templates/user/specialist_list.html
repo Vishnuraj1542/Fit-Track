@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for special in specials %}
+<img src="{{special.photo.url}}" width="150px" height="150px">
+<h2>{{special.name}}</h2>
+<p>{{special.phone}}</p>
+<p>{{special.gender}}</p>
+<p><a href="#">booknow</a></p>
+<p><a href="{% url 'specialistchat' special.key.id %}">chat with specialist</a></p>
+{% endfor %}
+</body>
+</html>

@@ -1,14 +1,23 @@
-<h2>Chat with Specialist</h2>
-<div class="chat-box">
-    {% for msg in messages %}
-        <div class="{% if msg.sender.id == request.session.login_id %}sent{% else %}received{% endif %}">
-            <strong>{{ msg.sender.username }}</strong>: {{ msg.message }} <br>
-            <small>{{ msg.timestamp }}</small>
-        </div>
-    {% endfor %}
+
+
+<div class="chat-container">
+    <h2>Chat with Specialist</h2>
+    <div class="messages">
+        {% for message in messages %}
+            <div class="message {% if message.sender_id == user_id %}sender{% else %}receiver{% endif %}">
+                {{ message.message }}
+                <p>
+                    <strong>
+                        {% if message.sender_id == user_id %}You{% else %}Specialist{% endif %}
+                    </strong>: {{ message.message }}
+                </p>
+                <small>{{ message.timestamp }}</small>
+            </div>
+        {% endfor %}
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type a message..." required>
+        <button type="submit">Send</button>
+    </form>
 </div>
-<form method="post">
-    {% csrf_token %}
-    <textarea name="message" placeholder="Type your message here..." required></textarea>
-    <button type="submit">Send</button>
-</form>
